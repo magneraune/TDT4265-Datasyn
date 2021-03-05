@@ -64,14 +64,6 @@ class ExampleModel(nn.Module):
             nn.ReLU(),
             nn.Linear(num_filters*2, num_classes)
         )
-        #self.feature_extractor.apply(self.init_weights)
-        #self.classifier.apply(self.init_weights)
-
-    # https://stackoverflow.com/questions/49433936/how-to-initialize-weights-in-pytorch
-    def init_weights(self, m):
-        if type(m) == (nn.Linear or nn.Conv2d):
-            nn.init.xavier_uniform(m.weight)
-            m.bias.data.fill_(0.01)
 
     def forward(self, x):
         """
@@ -137,6 +129,6 @@ if __name__ == "__main__":
     _, test_acc = compute_loss_and_accuracy(
         trainer.dataloader_test, trainer.model, trainer.loss_criterion
     )
-    print("Train final accuracy = ", train_acc)
-    print("Validation final accuracy = ", val_acc)
-    print("Test final accuracy = ", test_acc)
+    print("Train final accuracy = ", train_acc.item())
+    print("Validation final accuracy = ", val_acc.item())
+    print("Test final accuracy = ", test_acc.item())

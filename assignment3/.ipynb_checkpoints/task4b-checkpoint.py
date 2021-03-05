@@ -47,3 +47,11 @@ def torch_image_to_numpy(image: torch.Tensor):
 
 
 indices = [14, 26, 32, 49, 52]
+
+plt.figure(figsize=(20, 12))
+for i, ind_x in enumerate(indices):
+    plt.subplot(2, 5, i+1)
+    plt.imshow(torch_image_to_numpy(first_conv_layer.weight[ind_x, :, :, :]))
+    plt.subplot(2, 5, i+6)
+    plt.imshow(torch_image_to_numpy(activation[0, ind_x, :, :]))
+plt.savefig("plots/task4b.png")
