@@ -1,4 +1,3 @@
-
 import matplotlib.pyplot as plt
 from PIL import Image
 import torchvision
@@ -48,10 +47,25 @@ def torch_image_to_numpy(image: torch.Tensor):
 
 indices = [14, 26, 32, 49, 52]
 
-plt.figure(figsize=(20, 12))
+# Task 4b
+"""plt.figure(figsize=(20, 12))
 for i, ind_x in enumerate(indices):
     plt.subplot(2, 5, i+1)
     plt.imshow(torch_image_to_numpy(first_conv_layer.weight[ind_x, :, :, :]))
     plt.subplot(2, 5, i+6)
     plt.imshow(torch_image_to_numpy(activation[0, ind_x, :, :]))
-plt.savefig("plots/task4b.png")
+plt.savefig("plots/task4b.png")"""
+
+# Task 4c
+for child in model.children():
+    if isinstance(child, torch.nn.modules.pooling.AdaptiveAvgPool2d):  # The layer after last conv layer
+        break
+    image = child(image)
+
+print("Activation of filter is of shape: ", image.shape)
+
+plt.figure(figsize=(20, 12))
+for i in range(10):
+    plt.subplot(2, 5, i+1)
+    plt.imshow(torch_image_to_numpy(image[0, i, :, :]), cmap="gray", alpha=0.3)
+plt.savefig("plots/task_4c.png")
