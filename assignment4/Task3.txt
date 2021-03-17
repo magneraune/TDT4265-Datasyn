@@ -1,0 +1,22 @@
+## Task 3 ##
+
+a)
+Non-maximum supression (NMS) removes duplicates predictions of the same same object, in other words removes overlapping boxes.
+
+b)
+False. As the resolution of the feature maps gradually decrease, the predictions from the deeper layers are for detecting larger objects.
+
+c)
+They use different bounding box aspect ratios at the same spatial location to encourage predictions closer to their default box,
+ making the training more stable and to resulting in more diverse predictions.
+
+d)
+The main difference between SSD and YOLO is that YOLO uses two fully connected layers for detection, while SSD uses multiple convulutional layers with different sizes.
+
+e)
+For this feature map we have:
+38*38*6 = 8664 anchor boxes
+
+f)
+For the entire network we have:
+6*(38*38 + 19*19 + 10*10 + 5*5 + 3*3 + 1*1) = 11640 anchor boxes
