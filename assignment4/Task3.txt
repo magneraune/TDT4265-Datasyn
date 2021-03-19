@@ -20,3 +20,60 @@ For this feature map we have:
 f)
 For the entire network we have:
 6*(38*38 + 19*19 + 10*10 + 5*5 + 3*3 + 1*1) = 11640 anchor boxes
+
+## Task 4 ##
+
+b)
+mAP: 0.7563
+0               : 0.8054
+1               : 0.6198
+2               : 0.7436
+3               : 0.7776
+4               : 0.7968
+5               : 0.7694
+6               : 0.7812
+7               : 0.7613
+8               : 0.7794
+9               : 0.7281
+
+c)
+mAP: 0.8531
+0               : 0.8810
+1               : 0.7569
+2               : 0.8215
+3               : 0.8858
+4               : 0.8786
+5               : 0.8706
+6               : 0.8784
+7               : 0.8005
+8               : 0.8862
+9               : 0.8712
+The model was improved by adding an extra layer (setting stride=1 in the feature extractor layer)
+Also the optimizeer was changed to Adam
+output_channels = [64, 128, 256, 128, 128, 64, 64]
+layers: [shape(-1, output_channels[0], 75, 75),
+    shape(-1, output_channels[1], 38, 38),
+    shape(-1, output_channels[2], 19, 19),
+    shape(-1, output_channels[3], 10, 10),
+    shape(-1, output_channels[4], 5, 5),
+    shape(-1, output_channels[5], 3, 3),
+    shape(-1, output_channels[6], 1, 1)]
+filter sizes = [128, 256, 512, 128, 128, 128]
+
+Iterations: 1K
+
+d)
+BatchNorm added
+mAP: 0.9011
+0               : 0.9061
+1               : 0.8715
+2               : 0.9062
+3               : 0.9067
+4               : 0.9057
+5               : 0.9065
+6               : 0.9070
+7               : 0.8950
+8               : 0.9072
+9               : 0.8990
+
+Iterations: 3.5K

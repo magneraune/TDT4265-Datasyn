@@ -1,9 +1,9 @@
 MODEL:
     NUM_CLASSES: 11
     BACKBONE:
-        NAME: 'basic'
+        NAME: 'basic_improved' #basic #basic_improved
         PRETRAINED: False
-        OUT_CHANNELS: [128, 256, 128, 128, 64, 64]
+        OUT_CHANNELS: [64, 128, 256, 128, 128, 64, 64] #[128, 256, 128, 128, 64, 64]
         INPUT_CHANNELS: 3
 INPUT:
     IMAGE_SIZE: [300, 300]
@@ -15,5 +15,5 @@ SOLVER:
     GAMMA: 0.1
     BATCH_SIZE: 16
     LR: 2e-3
-OUTPUT_DIR: 'outputs/basic'
+OUTPUT_DIR: outputs/basic_improved #'outputs/basic' #outputs/basic_improved
 DATASET_DIR: "/work/datasets"

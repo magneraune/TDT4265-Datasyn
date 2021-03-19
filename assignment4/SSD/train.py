@@ -5,6 +5,7 @@ import pathlib
 import numpy as np
 from ssd.engine.inference import do_evaluation
 from ssd.config.defaults import cfg
+#from ssd.config.defaults_improved import cfg # for improved network
 from ssd.data.build import make_data_loader
 from ssd.engine.trainer import do_train
 from ssd.modeling.detector import SSDDetector
@@ -30,15 +31,22 @@ torch.backends.cudnn.benchmark = True
 torch.backends.cudnn.deterministic = True
 
 
-def start_train(cfg):
+def start_train(cfg, threshold):
     logger = logging.getLogger('SSD.trainer')
     model = SSDDetector(cfg)
     model = torch_utils.to_cuda(model)
-
-    optimizer = torch.optim.SGD(
+    
+    # SGD replaced with Adam
+    """optimizer = torch.optim.SGD(
         model.parameters(),
         lr=cfg.SOLVER.LR,
         momentum=cfg.SOLVER.MOMENTUM,
+        weight_decay=cfg.SOLVER.WEIGHT_DECAY
+    )"""
+    optimizer = torch.optim.Adam(
+        model.parameters(),
+        lr=cfg.SOLVER.LR,
+        #momentum=cfg.SOLVER.MOMENTUM,
         weight_decay=cfg.SOLVER.WEIGHT_DECAY
     )
 
@@ -56,7 +64,7 @@ def start_train(cfg):
 
     model = do_train(
         cfg, model, train_loader, optimizer,
-        checkpointer, arguments)
+        checkpointer, arguments, threshold)
     return model
 
 
@@ -94,8 +102,10 @@ def main():
         config_str = "\n" + cf.read()
         logger.info(config_str)
     logger.info("Running with config:\n{}".format(cfg))
-
-    model = start_train(cfg)
+    
+    # threshold: mAP threshold to end training
+    threshold = 0.85
+    model = start_train(cfg, threshold)
 
     logger.info('Start evaluating...')
     torch.cuda.empty_cache()  # speed up evaluating after training finished
