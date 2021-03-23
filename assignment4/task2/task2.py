@@ -227,7 +227,7 @@ def get_precision_recall_curve(
 
     precisions = [] 
     recalls = []
-    val_all_prediction_boxes = []
+    vec_all_prediction_boxes = []
 
     for threshold in confidence_thresholds:
         for image in range(len(confidence_scores)):
@@ -235,14 +235,14 @@ def get_precision_recall_curve(
             for score in range(len(confidence_scores[image])):
                 if confidence_scores[image][score] >= threshold:
                     val_prediction_boxes.append(all_prediction_boxes[image][score])
-            val_all_prediction_boxes.append(val_prediction_boxes)
+            vec_all_prediction_boxes.append(val_prediction_boxes)
             val_prediction_boxes = []
 
-        val_all_prediction_boxes = np.asarray(val_all_prediction_boxes)
-        result = calculate_precision_recall_all_images(val_all_prediction_boxes, all_gt_boxes, iou_threshold)
+        vec_all_prediction_boxes = np.asarray(vec_all_prediction_boxes)
+        result = calculate_precision_recall_all_images(vec_all_prediction_boxes, all_gt_boxes, iou_threshold)
         precisions = np.append(precisions, result[0])
         recalls = np.append(recalls, result[1])
-        val_all_prediction_boxes = []
+        vec_all_prediction_boxes = []
     
     return np.array(precisions), np.array(recalls)
 
